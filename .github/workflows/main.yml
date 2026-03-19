@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       agent_name:
-        description: 'keso1234'
+        description: 'kesto1234'
         required: true
-        default: 'keso1234'
+        default: 'kesto1234'
       agent_description:
-        description: 'keso1234'
+        description: 'kesto1234'
         required: true
-        default: 'KESO1234 AI Agent'
+        default: 'KES01234 AI Agent'
 
 jobs:
   verify:
@@ -25,8 +25,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Step 1 - Install ClawHub skill
-        run: npx clawhub@latest install verified-agent-identity
+      - name: Step 1 - Install CliHub skill
+        run: npm ci --save   # ⚠️ This command may not be correct—see notes below
 
       - name: Install script dependencies
         run: |
@@ -34,8 +34,7 @@ jobs:
           npm install
 
       - name: Step 2 - Create new Ethereum Identity
-        run: node scripts/createNewEthereumIdentity.js
+        run: node scripts/createNewIdentity.js
 
       - name: Step 3 - Link Human to Agent
-        run: |
-          node scripts/manualLinkHumanToAgent.js --challenge '{"name":"keso1234"}'
+        run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"kesto1234"}'
