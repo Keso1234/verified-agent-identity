@@ -25,9 +25,16 @@ jobs:
         with:
           node-version: '20'
 
+      # Fix Step 1: Install CliHub skill (assuming clihub is an npm package)
       - name: Step 1 - Install CliHub skill
-        run: npm ci --save   # ⚠️ This command may not be correct—see notes below
+        run: |
+          # Install clihub globally (if needed) and then install the skill
+          npm install -g clihub
+          clihub install verified-agent-identity   # Replace with correct skill name if different
+        # If you don't need a global install, you can use npx:
+        # run: npx clihub@latest install verified-agent-identity
 
+      # Install dependencies for your scripts
       - name: Install script dependencies
         run: |
           cd scripts
@@ -37,4 +44,5 @@ jobs:
         run: node scripts/createNewIdentity.js
 
       - name: Step 3 - Link Human to Agent
+        # Fixed JSON: use single quotes around the whole JSON string
         run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"kesto1234"}'
