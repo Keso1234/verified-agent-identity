@@ -10,7 +10,7 @@ on:
       agent_description:
         description: 'keso1234'
         required: true
-        default: 'keso1234 AI Agent'
+        default: 'KESO1234 AI Agent'
 
 jobs:
   verify:
