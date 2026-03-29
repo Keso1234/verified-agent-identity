@@ -1,18 +1,28 @@
+name: Verify
+
+on: [push]
+
 jobs:
   verify:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - run: npm install
+      - name: Install deps
+        run: npm install
 
-      - run: npx --yes clihub@latest install verified-agent-identity
+      - name: Install CLIHub
+        run: npx --yes clihub@latest install verified-agent-identity
 
-      - run: node scripts/createNewIdentity.js
+      - name: Create Identity
+        run: node scripts/createNewIdentity.js
 
-      - run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"kesto1234"}'
+      - name: Link Identity
+        run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"keso1234"}'
