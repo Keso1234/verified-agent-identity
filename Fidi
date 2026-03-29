@@ -1,0 +1,38 @@
+name: Verify Human Identity
+
+on:
+  workflow_dispatch:
+    inputs:
+      agent_name:
+        description: 'keso1234'
+        required: true
+        default: 'keso1234'
+      agent_description:
+        description: 'keso1234'
+        required: true
+        default: 'keso1234 AI Agent'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install CLIHub
+        run: npx --yes clihub@latest install verified-agent-identity
+
+      - name: Create New Ethereum Identity
+        run: node scripts/createNewIdentity.js
+
+      - name: Link Human to Agent
+        run: node scripts/manualLinkHumanToAgent.js --challenge '{"name":"keso1234","description":"keso1234 AI Agent"}'
