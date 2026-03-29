@@ -3,24 +3,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install dependencies (root)
-        run: npm install
+      - run: npm install
 
-      - name: Install CLIHub (local safer way)
-        run: npx clihub@latest install verified-agent-identity
+      - run: npx --yes clihub@latest install verified-agent-identity
 
-      - name: Create New Ethereum Identity
-        run: node scripts/createNewIdentity.js
+      - run: node scripts/createNewIdentity.js
 
-      - name: Link Human to Agent
-        run: |
-          node scripts/humanLinkHumanToAgent.js \
-          --challenge "{\"name\":\"kesto1234\"}"
+      - run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"kesto1234"}'
