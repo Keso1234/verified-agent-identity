@@ -1,17 +1,3 @@
-name: Verify Human Identity
-
-on:
-  workflow_dispatch:
-    inputs:
-      agent_name:
-        description: 'kesto1234'
-        required: true
-        default: 'kesto1234'
-      agent_description:
-        description: 'kesto1234'
-        required: true
-        default: 'KES01234 AI Agent'
-
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -25,24 +11,16 @@ jobs:
         with:
           node-version: '20'
 
-      # Fix Step 1: Install CliHub skill (assuming clihub is an npm package)
-      - name: Step 1 - Install CliHub skill
-        run: |
-          # Install clihub globally (if needed) and then install the skill
-          npm install -g clihub
-          clihub install verified-agent-identity   # Replace with correct skill name if different
-        # If you don't need a global install, you can use npx:
-        # run: npx clihub@latest install verified-agent-identity
+      - name: Install dependencies (root)
+        run: npm install
 
-      # Install dependencies for your scripts
-      - name: Install script dependencies
-        run: |
-          cd scripts
-          npm install
+      - name: Install CLIHub (local safer way)
+        run: npx clihub@latest install verified-agent-identity
 
-      - name: Step 2 - Create new Ethereum Identity
+      - name: Create New Ethereum Identity
         run: node scripts/createNewIdentity.js
 
-      - name: Step 3 - Link Human to Agent
-        # Fixed JSON: use single quotes around the whole JSON string
-        run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"kesto1234"}'
+      - name: Link Human to Agent
+        run: |
+          node scripts/humanLinkHumanToAgent.js \
+          --challenge "{\"name\":\"kesto1234\"}"
