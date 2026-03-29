@@ -1,22 +1,18 @@
-name: Verify
+name: Verify Human Identity
 
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   verify:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '20'
-
-      - name: Install deps
-        run: npm install
 
       - name: Install CLIHub
         run: npx --yes clihub@latest install verified-agent-identity
@@ -25,4 +21,4 @@ jobs:
         run: node scripts/createNewIdentity.js
 
       - name: Link Identity
-        run: node scripts/humanLinkHumanToAgent.js --challenge '{"name":"keso1234"}'
+        run: node scripts/manualLinkHumanToAgent.js --challenge '{"name":"keso1234","description":"keso1234 AI Agent"}'
